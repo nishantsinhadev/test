@@ -1,22 +1,22 @@
 # .github/workflows/restrict-prod-merges.yml
-name: Restrict merges to prod
+name: Restrict merges to prod/p1
 
 on:
   pull_request_target:
     types: [opened, synchronize, reopened]
     branches:
-      - prod
+      - "prod/p1"
 
 jobs:
   restrict:
-    name: Restrict merges to prod
+    name: Restrict merges to prod/p1
     runs-on: ubuntu-latest
     steps:
       - name: Validate PR source branch
         run: |
           echo "🔎 PR from: ${{ github.head_ref }} → ${{ github.base_ref }}"
-          if [ "${{ github.head_ref }}" != "uat" ]; then
-            echo "❌ Only 'uat' branch can be merged into 'prod'"
+          if [[ "${{ github.head_ref }}" != uat/* ]]; then
+            echo "❌ Only branches starting with 'uat/' can be merged into 'prod/p1'"
             exit 1
           fi
-          echo "✅ Validation passed: merging from 'uat' into 'prod'"
+          echo "✅ Validation passed: merging from '${{ github.head_ref }}' into 'prod/p1'"
