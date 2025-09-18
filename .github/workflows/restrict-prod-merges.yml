@@ -1,5 +1,5 @@
-# .github/workflows/restrict-prod-merges.yml
-name: Restrict merges to prod/*
+# .github/workflows/debug-pr.yml
+name: Debug PR Trigger
 
 on:
   pull_request:
@@ -8,17 +8,12 @@ on:
       - "prod/**"
 
 jobs:
-  restrict:
-    name: Restrict merges to prod/*
+  debug:
+    name: Debug PR Event
     runs-on: ubuntu-latest
     steps:
-      - name: Validate PR source branch
+      - name: Print GitHub context
         run: |
-          echo "🔎 PR from: ${{ github.head_ref }} → ${{ github.base_ref }}"
-          
-          if [[ "${{ github.base_ref }}" == prod/* ]] && [[ "${{ github.head_ref }}" != uat/* ]]; then
-            echo "❌ Only 'uat/*' branches can be merged into '${{ github.base_ref }}'"
-            exit 1
-          fi
-          
-          echo "✅ Validation passed: merging from '${{ github.head_ref }}' into '${{ github.base_ref }}'"
+          echo "head_ref: ${{ github.head_ref }}"
+          echo "base_ref: ${{ github.base_ref }}"
+          echo "ref: ${{ github.ref }}"
