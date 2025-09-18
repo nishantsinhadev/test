@@ -1,8 +1,7 @@
 name: test
 on:
   pull_request:
-    branches:
-      - prod # Trigger only for PRs targeting the 'prod' branch
+    types: [opened, reopened, synchronize]
 
 jobs:
   check_pr_source:
