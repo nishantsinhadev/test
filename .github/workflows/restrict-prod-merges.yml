@@ -1,3 +1,4 @@
+# .github/workflows/restrict-prod-merges.yml
 name: Restrict merges to prod
 
 on:
@@ -5,13 +6,15 @@ on:
     branches: [prod]
 
 jobs:
-  check-branch:
+  restrict:
+    name: Restrict merges to prod
     runs-on: ubuntu-latest
     steps:
       - name: Validate PR source branch
         run: |
-          echo "PR from: ${{ github.head_ref }} to: ${{ github.base_ref }}"
+          echo "🔎 PR from: ${{ github.head_ref }} → ${{ github.base_ref }}"
           if [ "${{ github.head_ref }}" != "uat" ]; then
             echo "❌ Only 'uat' branch can be merged into 'prod'"
             exit 1
           fi
+          echo "✅ Validation passed: merging from 'uat' into 'prod'"
