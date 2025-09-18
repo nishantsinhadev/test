@@ -1,1 +1,1 @@
-feature 1 - hello world
+feature 2 - hello world
