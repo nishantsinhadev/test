@@ -1,0 +1,17 @@
+name: test
+on:
+  pull_request:
+    branches:
+      - prod # Trigger only for PRs targeting the 'prod' branch
+
+jobs:
+  check_pr_source:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check source branch
+        run: |
+          SOURCE_BRANCH="${{ github.head_ref }}"
+          if [[ "$SOURCE_BRANCH" != "staging" && "$SOURCE_BRANCH" != "release/*" ]]; then
+            echo "Error: Pull requests into 'prod' must originate from 'staging' or a 'release/*' branch."
+            exit 1
+          fi
