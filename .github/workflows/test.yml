@@ -2,7 +2,9 @@ name: test
 on:
   pull_request:
     types: [opened, reopened, synchronize]
-
+    branches:
+      - 'prod'
+      
 jobs:
   check_pr_source:
     runs-on: ubuntu-latest
